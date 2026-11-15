@@ -538,8 +538,7 @@ const INVITE = {
     {
       title: "Engagement",
       date: "Wednesday, 9 December 2026",
-      time: "11:30 AM onwards",
-      note: "Sri Srishila Shivashaktipeeta Samskrutika Kendra, Ballari Road, Siruguppa"
+      time: "11:30 AM onwards"
     },
     {
       title: "Wedding",
@@ -579,7 +578,7 @@ function applyInvite() {
       <h3>${ev.title}</h3>
       <p>${ev.date}</p>
       <p class="when">${ev.time}</p>
-      <p class="note">${ev.note}${ev.heart ? " " + HEART : ""}</p>
+      ${ev.note ? `<p class="note">${ev.note}${ev.heart ? " " + HEART : ""}</p>` : ""}
     </div>
   `).join("");
 
