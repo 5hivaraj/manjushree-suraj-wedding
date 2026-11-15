@@ -118,12 +118,7 @@
     background: #F6EEE8;
   }
   #hero picture, .hero-art, .hero-wash, #petals, .shimmer { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .hero-art { object-fit: cover; object-position: center center; transform: scale(1.06); transform-origin: 50% 50%; }
-  .kenburns { transform-origin: 50% 50%; }
-  #hero.arrived .kenburns { animation: arriveZoom 1.8s var(--ease) forwards; }
-  #hero.drift .kenburns { animation: kb 28s ease-in-out infinite alternate; }
-  @keyframes arriveZoom { from { transform: scale(1.1); } to { transform: scale(1.02); } }
-  @keyframes kb { from { transform: scale(1.02); } to { transform: scale(1.08); } }
+  .hero-art { object-fit: cover; object-position: center center; transform: none; transform-origin: 50% 50%; }
   #petals { z-index: 3; }
   .shimmer { z-index: 3; }
   .hero-veil {
@@ -134,15 +129,13 @@
   #hero.arrived .hero-veil { animation: veilOut 1.55s ease forwards; }
   @keyframes veilOut { to { opacity: 0; visibility: hidden; } }
   .hero-wash {
-    background:
-      radial-gradient(80% 48% at 50% 22%, rgba(20, 10, 4, 0.28) 0%, rgba(20, 10, 4, 0.08) 50%, transparent 100%),
-      linear-gradient(to bottom, rgba(12, 6, 2, 0.38) 0%, rgba(12, 6, 2, 0.08) 22%, rgba(12, 6, 2, 0) 42%, rgba(8, 4, 2, 0.45) 100%);
+    background: linear-gradient(to bottom, rgba(12, 6, 2, 0.12) 0%, transparent 28%, transparent 58%, rgba(8, 4, 2, 0.42) 100%);
   }
   #petals { pointer-events: none; }
   .shimmer { overflow: hidden; pointer-events: none; }
   .shimmer::before {
     content: ""; position: absolute; top: -20%; bottom: -20%; left: 0; width: 55%;
-    background: linear-gradient(100deg, transparent, rgba(255, 251, 240, 0.28), transparent);
+    background: linear-gradient(100deg, transparent, rgba(255, 251, 240, 0.12), transparent);
     transform: translateX(-160%) rotate(8deg);
     animation: sweep 7.5s var(--ease) infinite 2.4s;
   }
@@ -156,6 +149,7 @@
     display: flex; flex-direction: column; align-items: center;
     text-align: center; padding: 9svh 1.5rem 7rem;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
   }
   .ganesha {
     width: 72px; height: auto; opacity: 0.96; object-fit: contain;
@@ -174,6 +168,11 @@
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: 15px; color: rgba(255, 255, 255, 0.92); margin: 1.05rem 0 0;
   }
+  .inv-parent-names {
+    font-family: "Cormorant Garamond", serif; font-style: italic;
+    font-size: clamp(1.05rem, 3.6vw, 1.35rem); color: rgba(255, 255, 255, 0.92); margin: 0.5rem 0 0;
+    max-width: 26rem; line-height: 1.45;
+  }
   .inv-and {
     font-family: "Great Vibes", cursive; color: #fff;
     font-size: clamp(1.7rem, 5.5vw, 2.25rem); margin: 0.35rem 0;
@@ -184,7 +183,7 @@
   }
   .scroll-cue {
     position: absolute; left: 50%; bottom: 2.4rem; transform: translateX(-50%);
-    z-index: 6; text-align: center;
+    z-index: 8; text-align: center; cursor: pointer;
   }
   .scroll-label {
     font-family: Jost, sans-serif; font-weight: 500; font-size: 13px;
@@ -210,8 +209,10 @@
   #hero.arrived .hero-copy > .hero-el:nth-child(6) { animation-delay: 0.86s; }
   #hero.arrived .hero-copy > .hero-el:nth-child(7) { animation-delay: 1.02s; }
   #hero.arrived .hero-copy > .hero-el:nth-child(8) { animation-delay: 1.18s; }
-  #hero.arrived .hero-copy > .hero-el:nth-child(9) { animation-delay: 1.34s; }
-  #hero.arrived .scroll-cue .hero-el { animation-delay: 1.55s; }
+  #hero.arrived .hero-copy > .hero-el:nth-child(9) { animation-delay: 1.18s; }
+  #hero.arrived .hero-copy > .hero-el:nth-child(10) { animation-delay: 1.32s; }
+  #hero.arrived .hero-copy > .hero-el:nth-child(11) { animation-delay: 1.46s; }
+  #hero.arrived .scroll-cue .hero-el { animation-delay: 1.65s; }
   @keyframes rise {
     from { opacity: 0; visibility: visible; transform: translateY(46px); }
     to { opacity: 1; visibility: visible; transform: none; }
@@ -294,13 +295,28 @@
   }
   #scratchCanvas:active, #scratchWrap.is-scratching #scratchCanvas { cursor: grabbing; }
   #scratchHint {
-    position: absolute; left: 50%; top: 58%; transform: translate(-50%, -50%);
+    position: absolute; left: 50%; top: 56%; transform: translate(-50%, -50%);
     z-index: 3; pointer-events: none;
-    font-family: Jost, sans-serif; font-size: 10px; letter-spacing: 0.28em;
-    text-indent: 0.28em; text-transform: uppercase; color: rgba(80, 50, 16, 0.55);
-    transition: opacity 0.25s ease;
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    font-family: Jost, sans-serif; font-weight: 600;
+    font-size: clamp(1.05rem, 4.2vw, 1.28rem);
+    letter-spacing: 0.16em; text-indent: 0.16em; text-transform: uppercase;
+    color: #3A2108;
+    text-shadow: 0 1px 0 rgba(255, 248, 220, 0.85), 0 0 14px rgba(255, 236, 180, 0.95);
+    white-space: nowrap;
+    animation: scratchBlink 1.15s ease-in-out infinite;
   }
-  #scratchWrap.is-scratching #scratchHint, #scratchWrap.is-done #scratchHint { opacity: 0; }
+  #scratchHint svg { width: 28px; height: 28px; stroke: #3A2108; fill: none; }
+  @keyframes scratchBlink {
+    0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.22; transform: translate(-50%, -50%) scale(1.08); }
+  }
+  #scratchWrap.is-scratching #scratchHint,
+  #scratchWrap.is-done #scratchHint {
+    opacity: 0;
+    animation: none;
+    pointer-events: none;
+  }
 
   .venue-name {
     font-family: "Playfair Display", serif; font-weight: 700; font-size: clamp(1.7rem, 5vw, 2rem);
@@ -308,6 +324,7 @@
   }
   .venue-address { font-size: 1.15rem; color: var(--rosemut); line-height: 1.55; margin: 0.8rem 0 0; }
   .venue-art { width: min(340px, 100%); height: auto; margin: 1.6rem auto 1.8rem; border-radius: 0.7rem; object-fit: cover; }
+  .venue-maps { margin-top: 1.8rem; }
 
   #closing { background: #1A100A; padding: 5rem 1.5rem; text-align: center; }
   .wave { width: min(42rem, 100%); height: 30px; margin: 0 auto; }
@@ -358,7 +375,7 @@
 <section id="hero">
   <picture>
     <source id="heroArtPortrait" media="(orientation: portrait)" srcset="assets/hero-4k-portrait.jpg">
-    <img class="hero-art kenburns" id="heroArt" src="assets/hero-4k.jpg" alt="">
+    <img class="hero-art" id="heroArt" src="assets/hero-4k.jpg" alt="">
   </picture>
   <div class="hero-wash"></div>
   <div class="hero-veil" aria-hidden="true"></div>
@@ -369,13 +386,15 @@
     <p class="hero-el inv-cap" data-field="eyebrow">TOGETHER WITH THEIR FAMILIES</p>
     <p class="hero-el inv-parents" data-field="brideHonorific"></p>
     <h1 class="hero-el inv-name" data-field="brideName">MANJUSHREE</h1>
+    <p class="hero-el inv-parent-names" data-field="brideParents"></p>
     <p class="hero-el inv-and">and</p>
     <p class="hero-el inv-parents" data-field="groomHonorific"></p>
-    <h1 class="hero-el inv-name" data-field="groomName">SURAJ PATIL</h1>
+    <h1 class="hero-el inv-name" data-field="groomName">SURAJ</h1>
+    <p class="hero-el inv-parent-names" data-field="groomParents"></p>
     <p class="hero-el inv-cap" data-field="inviteLine" data-html="1" style="margin-top:1.4rem;line-height:2"></p>
     <p class="hero-el inv-place" data-field="placeShort"></p>
   </div>
-  <div class="scroll-cue">
+  <div class="scroll-cue" id="scrollCue" role="button" tabindex="0" aria-label="Scroll to the invitation">
     <div class="hero-el">
       <div class="scroll-label">SCROLL</div>
       <svg id="scrollChev" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FDF8F3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -426,7 +445,14 @@
         <div class="sub" data-field="scratchWhere"></div>
       </div>
       <canvas id="scratchCanvas" aria-label="Scratch the heart to reveal the date"></canvas>
-      <div id="scratchHint">Scratch here</div>
+      <div id="scratchHint" aria-hidden="true">
+        <span>Scratch here</span>
+        <svg viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13.2V7.6a1.4 1.4 0 0 1 2.8 0V12"/>
+          <path d="M10.8 12.2V6.8a1.4 1.4 0 0 1 2.8 0V12"/>
+          <path d="M13.6 12V8.4a1.4 1.4 0 0 1 2.8 0v7.1c0 2.5-1.6 4.5-4.4 4.5-2.3 0-4.2-1.2-5.4-2.7L5 14.4"/>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
@@ -456,12 +482,23 @@
 <section class="plus-bg section">
   <div class="narrow">
     <svg class="icon-h reveal" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-    <h2 class="script-h reveal">Venue</h2>
+    <h2 class="script-h reveal">Wedding</h2>
     <div class="hdiv reveal"><span class="ln"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="ln"></span></div>
     <h3 class="venue-name reveal" data-field="venueName"></h3>
     <p class="venue-address reveal" data-field="venueAddress" data-html="1"></p>
     <img class="venue-art reveal" src="assets/mandir.jpg" alt="Mandir">
     <a class="btn square reveal" id="mapsLink" href="#" target="_blank" rel="noopener">View on Google Maps</a>
+  </div>
+</section>
+
+<section class="pink-bg section">
+  <div class="narrow">
+    <svg class="icon-h reveal" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+    <h2 class="script-h reveal">Reception</h2>
+    <div class="hdiv reveal"><span class="ln"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="ln"></span></div>
+    <h3 class="venue-name reveal" data-field="receptionVenueName"></h3>
+    <p class="venue-address reveal" data-field="receptionVenueAddress" data-html="1"></p>
+    <a class="btn square reveal venue-maps" id="receptionMapsLink" href="#" target="_blank" rel="noopener">View on Google Maps</a>
   </div>
 </section>
 
@@ -492,10 +529,12 @@
    - drop a song at assets/music.mp3 and the sound button will play it
    ============================================================ */
 const INVITE = {
-  groomName: "SURAJ PATIL",
+  groomName: "SURAJ",
   brideName: "MANJUSHREE",
   groomHonorific: "Chi.",
   brideHonorific: "Chi. Kum. Sou.",
+  brideParents: "D/o Smt. Sudharshini & Sri Ravishankar. R.S",
+  groomParents: "S/o Smt. Annapurna & Sri Arun B. Patil",
   eyebrow: "TOGETHER WITH THEIR FAMILIES",
   inviteLine: "CORDIALLY INVITE YOU TO JOIN<br>THEIR WEDDING CELEBRATIONS",
   placeShort: "Athani Kalyana Mantap, Bagalkote",
@@ -503,10 +542,13 @@ const INVITE = {
   venueName: "Athani Kalyana Mantap",
   venueAddress: "Near Basaveshwar Engineering College Circle,<br>Vidyagiri, Bagalkote",
   mapsQuery: "Athani Kalyana Mantap Basaveshwar Engineering College Circle Vidyagiri Bagalkote",
+  receptionVenueName: "Sri Srishila Shivashaktipeeta Samskrutika Kendra",
+  receptionVenueAddress: "Ballari Road, Siruguppa",
+  receptionMapsUrl: "https://share.google/ArKkVo5cEUu3IHp0o",
   weddingStart: "2026-12-06T12:38:00",
   calendarStart: "20261206T123800",
   calendarEnd: "20261206T160000",
-  calendarDetails: "Wedding of Chi. Kum. Sou. Manjushree and Chi. Suraj Patil\nSunday, 6 December 2026 at 12:38 PM\nAbhijit Lagnam\nAthani Kalyana Mantap, Near Basaveshwar Engineering College Circle, Vidyagiri, Bagalkote",
+  calendarDetails: "Wedding of Chi. Kum. Sou. Manjushree and Chi. Suraj\nSunday, 6 December 2026 at 12:38 PM\nAbhijit Lagnam\nAthani Kalyana Mantap, Near Basaveshwar Engineering College Circle, Vidyagiri, Bagalkote",
   scratchKicker: "You're Invited!",
   scratchDate: "December 6, 2026",
   scratchWhen: "Sunday · 12:38 PM",
@@ -578,6 +620,7 @@ function applyInvite() {
   maps.searchParams.set("api", "1");
   maps.searchParams.set("query", INVITE.mapsQuery);
   document.getElementById("mapsLink").href = maps.toString();
+  document.getElementById("receptionMapsLink").href = INVITE.receptionMapsUrl;
 
   const bgm = document.getElementById("bgm");
   bgm.src = INVITE.music;
@@ -716,6 +759,21 @@ vid.addEventListener("error", () => {
   if (!opened) { opened = true; setSound(true); }
   finishCover();
   heroEntrance();
+});
+
+function scrollPastHero() {
+  const next = document.getElementById("blessing");
+  if (!next) return;
+  const top = next.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
+}
+const scrollCue = document.getElementById("scrollCue");
+scrollCue.addEventListener("click", (e) => {
+  e.stopPropagation();
+  scrollPastHero();
+});
+scrollCue.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); scrollPastHero(); }
 });
 
 /* ---------- petals ---------- */
